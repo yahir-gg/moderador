@@ -86,6 +86,8 @@ def iniciar():
     # Opening JSON file
     f = open('static/files/conversation001.json', encoding="utf8")
 
+    
+
     # returns JSON object as
     # a dictionary
     data = json.load(f)
