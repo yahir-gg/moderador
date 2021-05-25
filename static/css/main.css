@@ -361,3 +361,103 @@ html, body{
     margin-top: 30px;
     margin-bottom: 50px;
 }
+/*-------------------empieza USUARIOS BLOQUEADOS-------------------*/
+.container-blockUser{
+    border: solid 5px #022422;
+    border-radius: 15px;
+    padding: 30px;
+    font-size:20px;
+    text-align: justify;
+    position:absolute;
+    left:70px; 
+    top:120px; 
+    width:335px;
+    height: 600px;
+    background-color: #E8FFE6;
+    counter-reset: cont1;
+}
+
+.container-blockUser li {
+    display: inline-block;
+    text-align: justify;
+    padding: 5px 5px 5px 25px;  
+}
+
+.container-blockUser li:before {
+    content: counter(cont1, decimal) ". ";
+    counter-increment: cont1;
+    position: absolute;
+    margin-left: -25px;
+}
+.container-blockMsj{
+    border: solid 5px #022422;
+    border-radius: 15px;
+    padding: 30px;
+    font-size:20px;
+    text-align: justify;
+    position:absolute;
+    left:428px; 
+    top:120px; 
+    width:550px;
+    height: 600px;
+    background-color: #E8FFE6;
+    counter-reset: cont2;
+}
+
+.container-blockMsj li {
+    display: inline-block;
+    text-align: justify;
+    padding: 5px 5px 5px 25px;  
+}
+
+.container-blockMsj li:before {
+    content: counter(cont2, decimal) ". ";
+    counter-increment: cont2;
+    position: absolute;
+    margin-left: -25px;
+}
+
+.generate-report{
+    border: solid 5px #022422;
+    border-radius: 15px;
+    padding: 30px;
+    font-size:20px;
+    text-align: justify;
+    position:absolute;
+    left:1000px; 
+    top:120px; 
+    width:270px;
+    height: 600px;
+    background-color: #E8FFE6;
+    float: left;
+}
+
+.generate-report a{
+    font-style: italic;
+    color: black;
+}
+
+.prueba{
+    display: block;
+    margin-top: 50%;
+    padding-bottom: 20px;
+}
+.button-resul{
+    width: 180px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    border-radius: 60px;
+    color: #fff;
+    background-color: #022422;
+    border-color: #022422;
+    font-size: 25px;
+    text-align: center;
+}
+
+/*
+.section-result{
+    display: flex;
+    max-height: 2000px;
+    min-height: 430;
+}*/
+/*-------------------termina USUARIOS BLOQUEADOS-------------------*/

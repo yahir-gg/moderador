@@ -8,7 +8,7 @@ import conversacion
 
 res = modulo1.iniciar()
 res1 = conversacion.archivo()
-res2 = modulo2.iniciar()
+res2 = modulo2.filtro()
 
 # objeto apara crear rutas
 app = Flask(__name__)
@@ -55,6 +55,11 @@ def filtro_msj_agr():
 @app.route('/bloqueaMsj')
 def bloquea():
     return render_template('bloqueaMsj.html', resModulo2=res)
+
+# bloquea mensajes agresivos
+@app.route('/usuarios-bloqueados')
+def bloquea_users():
+    return render_template('filtro-block-user.html', resu=res2)
 
 # pagina de contacto
 @app.route('/contacto')

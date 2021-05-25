@@ -1,147 +1,109 @@
-import numpy as np
-import pandas as pd
-import re
-import nltk
-import json
-import pickle
-from nltk.corpus import stopwords
-from nltk.tokenize import TweetTokenizer
-from nltk.stem import WordNetLemmatizer
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics import classification_report
-nltk.download('stopwords')
-nltk.download('wordnet')
+from modulo1 import iniciar
 
-import pprint
+def filtro():
+    resultado = []
+    resultado.append(iniciar())
 
+    """Mostrando longitud de la lista principal"""
 
-def iniciar():
-    train = pd.read_csv('static/files/train_aggressiveness.csv', encoding = 'utf-8')
-    df = train.copy()
-    # df.head()
+    print(len(resultado))
 
-    ", ".join(stopwords.words('spanish'))
-    stops = set(stopwords.words('spanish'))
+    """La lista tiene longitud 1, es decir, tiene una lista dentro, exploramos esa lista interna"""
 
+    print(len(resultado[0]))
 
-    # Funcion que limpia el texto
-    def process_text(message):
-        # Elimina hyperlinks.
-        message = re.sub(r'https?://\S+|www\.\S+', '', message)
+    """La lista interna tiene una longitud de 4, es decir, las 4 listas que retorna la funcion principal
+    * Si quieren imprimir la primera lista 1:
+    resultado [0] [0]
+    * Para la segunda lista:
+    resultado [0] [1]
 
-        # Elimina html
-        message = re.sub(r'<.*?>', '', message)
-        # Elimina numeros
-        message = re.sub(r'\d+', '', message)
-        # Elimina menciones de usuarios
-        message = re.sub(r'@\w+', '', message)
-        # Elimina puntuacion
-        message = re.sub(r'[^\w\s\d]', '', message)
-        # Elimina espacios en blanco
-        message = re.sub(r'\s+', ' ', message).strip()
-        # Elimina stopwords
-        message = " ".join([word for word in str(message).split() if word not in stops])
+    Primero va el nombre, luego el 0 (siempre) y luego el numero de la lista (0,1,2, o 3)
+    """
 
-        return message.lower()
+    c1 = 0
+    for elem in resultado[0]:
+        print('Lista ',c1,': ',elem)
+        c1+=1
 
-    df['newText'] = df['Text'].apply(lambda x: process_text(x))
-    def token_lemma(message):
-        tk = TweetTokenizer()
-        lemma = WordNetLemmatizer()
-        message = tk.tokenize(message)
-        message = [lemma.lemmatize(word) for word in message]
-        message = " ".join([word for word in message])
-        return message
+    """POO, Creacion de una clase: como atributos tiene nombre y cantidad (de mensajes agresivos)"""
 
-    message = df['newText']
-    # print(message)
+    class Objeto:
+        nombre = ""
+        cantidad = 0
 
-    df['lemmaText'] = df['newText'].apply(lambda x: token_lemma(x))
-    y = df["Category"]
+    """a1 es la lista de usuarios agresivos"""
 
-    df['lemmaText'].head()
+    a1=[]
+    # recorremos la lista de mensajes agresivos
+    for e in resultado[0][0]:
+        # verificamos que no se repitan los nombres
+        if e['from'] not in a1:
+            # se agrega el user a la lista
+            a1.append(e['from'])
 
-    vect = CountVectorizer(stop_words = 'english')
-    X_train_matrix = vect.fit_transform(df["lemmaText"])
+    a1
 
-    X_train, X_test, y_train, y_test = train_test_split(X_train_matrix, y, test_size= 0.3)
-    model = MultinomialNB()
-    model.fit(X_train, y_train)
-    # print (model.score(X_train, y_train))
-    # print (model.score(X_test, y_test))
-    predicted_result = model.predict(X_test)
-    print("\n")
-    # print(classification_report(y_test,predicted_result))
+    """Se crea una lista llamada objetos que guardara objetos, por cada usuario agresivo se crea un objeto"""
 
-    df['prediccion'] = model.predict(vect.transform(df["lemmaText"]))
+    objetos = []
+    # recorremos la lista de user agresivos
+    for e in a1:
+        # se crea objeto
+        o = Objeto()
+        # asignacion de nombre
+        o.nombre = str(e)
+        # cantidad por default se pone en 0
+        # el objeto se añade a la lista objetos
+        objetos.append(o)
+        print('Objeto ',e, 'creado')
 
-    # print(df["prediccion"])
+    """**CONTAMOS LOS MENSAJES AGRESIVOS Y LOS ASIGNAMOS AL OBJETO**"""
 
-    df['Determinante'] = df['prediccion'].apply(lambda prediccion:'No agresivo' if prediccion ==0 else 'Agresivo')
+    cont = 0
+    # recorremos la lista de msj agresivos
+    for d in resultado[0][0]:
+        # recorremos la lista de objetos
+        for h in objetos:
+            # verificamos si el usuario agresivo tiene un objeto creado
+            if d['from'] == h.nombre:
+                # se aumenta en uno la cantidad de msj agr
+                h.cantidad+=1
 
-    # print(df.head(15))
+    """Imprimimos los objetos que tenemos"""
 
-    # Opening JSON file
-    f = open('static/files/conversation001.json', encoding="utf8")
+    print('Objetos')
+    # recorremos la lista de objetos
+    for h in objetos:
+        print('User: ',h.nombre,' Num.MsjAgr: ',h.cantidad)
 
+    """Comprobamos en la lista de mensajes agresivos"""
+
+    for e in resultado[0][0]:
+        print(e['from'],e['text'])
+
+    """Listo, ya esta lo mas dificil, ahora continuen con sus demas listas. Cuando hagan su parte denle a las variables y listas nombres adecuados"""
+
+    blockUsers = []
+    userSlice  = slice(3)
+    for o in objetos:
+        # La cantidad tiene que ser >= que 3, pero para funcionara en este ejemplo lo puse como 2
+        if o.cantidad >= 2:
+            blockUsers.append(o.nombre)
+            bloqueaUsers= blockUsers[userSlice]
     
+    print(bloqueaUsers)
 
-    # returns JSON object as
-    # a dictionary
-    data = json.load(f)
+    #resultado[0][3]
+    msjAgrUs = []
+    for w in resultado[0][3]:
+        for t in bloqueaUsers:
+            if w['from'] != t:
+                msjAgrUs.append(w)
 
-    # Iterating through the json
-    # list
-    mensajes=[]
-    for i in data['messages']:
-    # print(i['text'])
-        menU = (i['from'])
-        tex = (i['text'])
-        men=(menU+tex)
-        mensajes.append(men)
-        #mensajes.append(i['text'])
-    # Closing file
-    f.close()
+    print(msjAgrUs)
 
-    mensajes_nolist=[]
-    # print("imp\n", mensajes)
-    for elem in mensajes:
-        if type(elem) == str:
-            # process_text(elem)
-            mensajes_nolist.append(elem)
-        elif type(elem) == list:
-            for elem2 in elem:
-                # process_text(elem2)
-                mensajes_nolist.append(elem2)
-        else:
-            continue
-
-    determinantes = []
-    mensajes_Noagresivos = []
-    for elem in mensajes_nolist:
-        if type(elem)==str:
-            # print(elem)
-            determinante = model.predict(vect.transform([elem]))
-            if determinante == 0:
-                mensajes_Noagresivos.append(elem)
-            determinantes.append(determinante)
-
-    contador = 0
-    for elem in determinantes:
-        if elem == 0:
-            tipo = 'NO AGRESIVO'
-            print('El mensaje ',contador,' es ',tipo)
-        else:
-            tipo = 'AGRESIVO'
-            print('El mensaje ',contador,' es ',tipo)
-        contador = contador + 1
-
-    #with open('text_classifier', 'wb') as picklefile:
-     #   pickle.dump(model,picklefile)
-
-    return mensajes_Noagresivos
+    return bloqueaUsers, msjAgrUs
 
     
 
