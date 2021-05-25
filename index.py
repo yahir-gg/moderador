@@ -23,7 +23,16 @@ def chat():
 
     #return emoji_pattern.sub(r'', mensajes)
 
+@app.route('/bloquear_usuarios')
 
+def bloquear_usuarios():
+        return render_template('bloquear_usuarios.html')
+
+
+@app.route('/resultado_bloquear')
+
+def resultado_bloquear():
+        return render_template('resultado_bloquear_usuario.html')
 
 
 # ctrl+shift+r para recargar sin cache
