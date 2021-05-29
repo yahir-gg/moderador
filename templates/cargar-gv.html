@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
+    <title>Contacto</title>
+</head>
+<body>
+    <!--Empieza barra de navegación (navbar)-->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">Inicio</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="eleccion">Analizar <span class="sr-only">(current)</span></a>
+                </li>
+              </ul>
+              <ul class="navbar-nav mr-auto right">
+                <li class="nav-item active">
+                  <a class="nav-link" href="acerca">Acerca <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="contacto">Contacto <span class="sr-only">(current)</span></a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+    </header>
+    <!--Termina barra de navegación (navbar)-->
+    <!--Empieza seccion de cargar archivo-->
+    <!--container es la caja de Instrucciones-->
+    <div class="instru">
+        <h2>INSTRUCCIONES</h2>
+        <h5>1. Seleccione su archivo<br>
+            2. Click en cargar archivo<br>
+            3. Click en continuar</h5>
+            <br>
+         <p>Las conversaciones analizadas no 
+            son almacenadas en nuestros servidores, 
+            simplemente se analizan y una vez calculados 
+            los resultados, estas son eliminadas.
+        </p>
+    </div>
+    <!--Termina container es la caja de Instrucciones-->
+    <!--superior es la caja que contiene el cargar achivo de conversacion-->
+    <div class="archivo">
+        <h2>Cargar archivo de conversación:</h2>
+        <h3> NOTA:</h3><p>Solo se admiten archivos con formato JSON</p>
+        
+        <form action="/uploader" method="POST" enctype="multipart/form-data">
+            <input type="file" name="archivo">
+            <br><br>
+            <input type="submit"value="Cargar archivo">
+            <input type="hidden"value="gv" id="tipo" name="tipo">
+            <div class="msg">{{ msg }}</div>
+         </form>
+             <div class="continuar"> 
+                <a href="elegir-filtros"><p>Continuar</p></a>
+            </div>
+    </div>
+    <!--Termina container es la caja que contiene el cargar achivo de conversacion -->
